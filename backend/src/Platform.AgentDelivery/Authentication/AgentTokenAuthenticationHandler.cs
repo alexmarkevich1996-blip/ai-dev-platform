@@ -53,14 +53,11 @@ internal sealed class AgentTokenAuthenticationHandler(
             return AuthenticateResult.Fail(resolved.Error.First.Message);
         }
 
+        var employeeId = resolved.Value.Value.ToString("D", CultureInfo.InvariantCulture);
+
         var identity = new ClaimsIdentity(AgentTokenDefaults.AuthenticationScheme);
-        identity.AddClaim(new Claim(
-            AgentTokenDefaults.EmployeeIdClaimType,
-            resolved.Value.Value.ToString(),
-            ClaimValueTypes.String));
-        identity.AddClaim(new Claim(
-            ClaimTypes.NameIdentifier,
-            resolved.Value.Value.ToString("D", CultureInfo.InvariantCulture)));
+        identity.AddClaim(new Claim(AgentTokenDefaults.EmployeeIdClaimType, employeeId, ClaimValueTypes.String));
+        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, employeeId));
 
         var principal = new ClaimsPrincipal(identity);
         return AuthenticateResult.Success(new AuthenticationTicket(principal, Scheme.Name));

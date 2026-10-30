@@ -1,1 +1,1 @@
-export type { AgentToken, AgentTokenId } from './model/types'
+export type { AgentTokenId } from './model/types'

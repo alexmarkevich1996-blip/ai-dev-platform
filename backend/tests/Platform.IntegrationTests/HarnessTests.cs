@@ -24,22 +24,34 @@ public sealed class HarnessTests(PlatformApplication application)
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("Healthy", body);
 
-        Assert.Equal(1, await AppliedMigrationCountAsync("accounts", cancellationToken));
-        Assert.Equal(1, await AppliedMigrationCountAsync("projects", cancellationToken));
+        // Each module keeps its own history, so both must have run. The count is not
+        // asserted exactly: adding a migration later must not break this test.
+        Assert.NotEmpty(await AppliedMigrationsAsync("accounts", cancellationToken));
+        Assert.NotEmpty(await AppliedMigrationsAsync("projects", cancellationToken));
     }
 
     /// <summary>
-    /// Counts the rows in one module's migration history. Each module keeps its own,
-    /// in its own schema, so neither can report the other's state.
+    /// Reads one module's migration history. Each module keeps its own, in its own
+    /// schema, so neither can report the other's state.
     /// </summary>
-    private async Task<int> AppliedMigrationCountAsync(string schema, CancellationToken cancellationToken)
+    private async Task<IReadOnlyList<string>> AppliedMigrationsAsync(
+        string schema,
+        CancellationToken cancellationToken)
     {
         await using var connection = new NpgsqlConnection(application.ConnectionString);
         await connection.OpenAsync(cancellationToken);
 
         await using var command = connection.CreateCommand();
-        command.CommandText = $"""SELECT count(*) FROM "{schema}"."__migrations_history";""";
+        command.CommandText = $"""SELECT "migration_id" FROM "{schema}"."__migrations_history";""";
 
-        return Convert.ToInt32(await command.ExecuteScalarAsync(cancellationToken));
+        var applied = new List<string>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            applied.Add(reader.GetString(0));
+        }
+
+        return applied;
     }
 }

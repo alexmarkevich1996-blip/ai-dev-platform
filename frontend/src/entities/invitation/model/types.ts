@@ -1,17 +1,9 @@
 import type { Brand } from '@/shared/lib/brand'
 
-/** A named permission to create an account, valid for a limited time. */
-export type InvitationId = Brand<'InvitationId'>
-
 /**
- * The shape the Invitations screens will read.
+ * A named permission to create an account, valid for a limited time.
  *
- * Invitation endpoints arrive with the onboarding spec; from then on this type
- * comes from `components['schemas']` rather than from here.
+ * Only the identifier is declared here. The Invitation shape will come from
+ * `components['schemas']` once the onboarding spec adds the endpoints.
  */
-export interface Invitation {
-  readonly id: InvitationId
-  readonly email: string
-  readonly expiresAt: string
-  readonly acceptedAt: string | null
-}
+export type InvitationId = Brand<'InvitationId'>

@@ -6,7 +6,7 @@ namespace Platform.AgentDelivery.Authentication;
 /// <summary>Reads the Employee from the claim the Agent Token handler issued.</summary>
 internal sealed class CurrentAgentEmployee(IHttpContextAccessor httpContextAccessor) : ICurrentAgentEmployee
 {
-    public EmployeeId Require()
+    public EmployeeId RequireEmployeeId()
     {
         var claim = httpContextAccessor.HttpContext?.User.FindFirst(AgentTokenDefaults.EmployeeIdClaimType);
 

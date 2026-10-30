@@ -43,12 +43,19 @@ services:
     build:
       context: ./frontend
     environment:
-      BACKEND_URL: http://backend:8080
+      BACKEND_URL: ${BACKEND_URL}
     ports:
       - '5173:5173'
     depends_on:
       backend:
         condition: service_healthy
+    healthcheck:
+      # The dev server answering on its port is all "ready" means here.
+      test: ['CMD-SHELL', 'wget --quiet --spider http://localhost:5173/ || exit 1']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
 
 volumes:
   db-data:

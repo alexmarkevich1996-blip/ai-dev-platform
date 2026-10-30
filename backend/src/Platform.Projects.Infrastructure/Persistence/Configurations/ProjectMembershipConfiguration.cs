@@ -34,7 +34,5 @@ internal sealed class ProjectMembershipConfiguration : IEntityTypeConfiguration<
 
         // Every agent request filters by Employee, then by Project.
         builder.HasIndex(membership => new { membership.EmployeeId, membership.ProjectId });
-
-        builder.Ignore(membership => membership.IsCurrent);
     }
 }

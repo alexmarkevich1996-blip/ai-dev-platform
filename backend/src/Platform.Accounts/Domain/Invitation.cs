@@ -34,14 +34,17 @@ public sealed class Invitation
 
     public DateTimeOffset ExpiresAt { get; private set; }
 
+    /// <summary>Set once the Invitation is accepted.</summary>
     public DateTimeOffset? AcceptedAt { get; private set; }
-
-    public bool IsAccepted => AcceptedAt is not null;
 
     public static Invitation Issue(string email, string secret, DateTimeOffset issuedAt) =>
         new(Guid.CreateVersion7(), email, SecretHash.Of(secret), issuedAt);
 
     public bool HasExpired(DateTimeOffset now) => now >= ExpiresAt;
 
+    /// <summary>
+    /// Marks the Invitation accepted, once. The use case that creates the Employee
+    /// account and its first Memberships belongs to the onboarding spec.
+    /// </summary>
     public void MarkAccepted(DateTimeOffset acceptedAt) => AcceptedAt ??= acceptedAt;
 }

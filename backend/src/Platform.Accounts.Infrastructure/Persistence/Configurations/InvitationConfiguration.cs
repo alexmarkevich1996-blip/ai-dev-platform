@@ -20,14 +20,12 @@ internal sealed class InvitationConfiguration : IEntityTypeConfiguration<Invitat
 
         builder.Property(invitation => invitation.TokenHash)
             .HasConversion(hash => hash.Value, value => SecretHash.FromStoredValue(value))
-            .HasMaxLength(AgentTokenConfiguration.HashLength)
+            .HasMaxLength(SecretHash.Length)
             .IsRequired();
 
         builder.Property(invitation => invitation.IssuedAt).IsRequired();
         builder.Property(invitation => invitation.ExpiresAt).IsRequired();
 
         builder.HasIndex(invitation => invitation.TokenHash).IsUnique();
-
-        builder.Ignore(invitation => invitation.IsAccepted);
     }
 }

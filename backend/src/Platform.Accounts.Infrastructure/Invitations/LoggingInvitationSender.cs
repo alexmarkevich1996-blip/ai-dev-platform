@@ -13,6 +13,11 @@ namespace Platform.Accounts.Infrastructure.Invitations;
 /// an Invitation is accepted during development: read the link from the console.
 /// Replacing this registration with a real sender is the only change real mail needs.
 /// </remarks>
+/// <remarks>
+/// Registered only in Development, by
+/// <see cref="AccountsInfrastructureModule.AddDevelopmentInvitationSender"/>. Were it
+/// registered everywhere, a production log would carry working accept links.
+/// </remarks>
 internal sealed class LoggingInvitationSender(ILogger<LoggingInvitationSender> logger) : IInvitationSender
 {
     public Task<UnitResult<ErrorList>> SendAsync(InvitationDelivery delivery, CancellationToken cancellationToken)

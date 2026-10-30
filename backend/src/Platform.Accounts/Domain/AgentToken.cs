@@ -38,12 +38,15 @@ public sealed class AgentToken
 
     public DateTimeOffset IssuedAt { get; private set; }
 
+    /// <summary>Set once the token is revoked. Resolving a token ignores a revoked one.</summary>
     public DateTimeOffset? RevokedAt { get; private set; }
-
-    public bool IsRevoked => RevokedAt is not null;
 
     public static AgentToken Issue(EmployeeId employeeId, string name, string secret, DateTimeOffset issuedAt) =>
         new(Guid.CreateVersion7(), employeeId, name, SecretHash.Of(secret), issuedAt);
 
+    /// <summary>
+    /// Marks the token revoked, once. The Offboarding use case that revokes every
+    /// token of one Employee at once belongs to the offboarding spec.
+    /// </summary>
     public void Revoke(DateTimeOffset revokedAt) => RevokedAt ??= revokedAt;
 }

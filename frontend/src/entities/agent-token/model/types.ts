@@ -1,18 +1,11 @@
 import type { Brand } from '@/shared/lib/brand'
 
-/** A secret the Employee issues and hands to their Employee Agent. */
-export type AgentTokenId = Brand<'AgentTokenId'>
-
 /**
- * What the Agent Tokens screen will list. The secret itself is never part of
- * this shape: the backend stores only a hash and shows the secret once, in the
- * response to issuing it.
+ * A secret the Employee issues and hands to their Employee Agent.
  *
- * Agent Token endpoints arrive with the onboarding spec.
+ * Only the identifier is declared here. The Agent Token shape will come from
+ * `components['schemas']` once the onboarding spec adds the endpoints. The
+ * secret itself will never be part of it: the backend stores only a hash and
+ * returns the secret once, in the answer to issuing it.
  */
-export interface AgentToken {
-  readonly id: AgentTokenId
-  readonly name: string
-  readonly issuedAt: string
-  readonly revokedAt: string | null
-}
+export type AgentTokenId = Brand<'AgentTokenId'>

@@ -34,13 +34,15 @@ public sealed class ProjectMembership
 
     public DateTimeOffset StartedAt { get; private set; }
 
-    /// <summary>Set when Membership ends, including by Offboarding.</summary>
+    /// <summary>Set once Membership ends. Only a Membership that has not ended opens a Project.</summary>
     public DateTimeOffset? EndedAt { get; private set; }
-
-    public bool IsCurrent => EndedAt is null;
 
     public static ProjectMembership Start(ProjectId projectId, EmployeeId employeeId, DateTimeOffset startedAt) =>
         new(Guid.CreateVersion7(), projectId, employeeId, startedAt);
 
+    /// <summary>
+    /// Ends Membership, once. The Offboarding use case that ends every Membership
+    /// of one Employee at once belongs to the offboarding spec.
+    /// </summary>
     public void End(DateTimeOffset endedAt) => EndedAt ??= endedAt;
 }

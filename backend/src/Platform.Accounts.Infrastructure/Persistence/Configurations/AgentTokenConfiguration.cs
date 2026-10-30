@@ -7,9 +7,6 @@ namespace Platform.Accounts.Infrastructure.Persistence.Configurations;
 
 internal sealed class AgentTokenConfiguration : IEntityTypeConfiguration<AgentToken>
 {
-    /// <summary>A SHA-256 digest in lowercase hexadecimal is always 64 characters.</summary>
-    internal const int HashLength = 64;
-
     public void Configure(EntityTypeBuilder<AgentToken> builder)
     {
         ArgumentNullException.ThrowIfNull(builder);
@@ -29,7 +26,7 @@ internal sealed class AgentTokenConfiguration : IEntityTypeConfiguration<AgentTo
         // Only the hash is stored. The secret itself is shown once, when issued.
         builder.Property(token => token.TokenHash)
             .HasConversion(hash => hash.Value, value => SecretHash.FromStoredValue(value))
-            .HasMaxLength(HashLength)
+            .HasMaxLength(SecretHash.Length)
             .IsRequired();
 
         builder.Property(token => token.IssuedAt).IsRequired();
@@ -39,7 +36,5 @@ internal sealed class AgentTokenConfiguration : IEntityTypeConfiguration<AgentTo
 
         // Offboarding revokes every token of one Employee in one statement.
         builder.HasIndex(token => token.EmployeeId);
-
-        builder.Ignore(token => token.IsRevoked);
     }
 }

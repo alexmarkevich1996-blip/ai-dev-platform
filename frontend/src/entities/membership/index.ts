@@ -1,1 +1,1 @@
-export type { ProjectMembership, ProjectMembershipId } from './model/types'
+export type { ProjectMembershipId } from './model/types'

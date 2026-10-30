@@ -11,5 +11,9 @@ namespace Platform.AgentDelivery.Authentication;
 /// </remarks>
 public interface ICurrentAgentEmployee
 {
-    EmployeeId Require();
+    /// <summary>
+    /// The Employee the presented Agent Token belongs to. Throws when the request
+    /// carries no Agent Token identity, which the MCP route's policy prevents.
+    /// </summary>
+    EmployeeId RequireEmployeeId();
 }

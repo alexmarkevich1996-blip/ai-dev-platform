@@ -1,1 +1,1 @@
-export type { Invitation, InvitationId } from './model/types'
+export type { InvitationId } from './model/types'

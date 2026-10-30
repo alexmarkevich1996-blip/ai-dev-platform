@@ -34,7 +34,8 @@ dotnet_diagnostic.MA0144.severity = none
 dotnet_diagnostic.MA0004.severity = none
 dotnet_diagnostic.CA2007.severity = none
 
-# Minimal API endpoint handlers and composition-root helpers are public by design.
+# CA1515 only fires in an executable, which here is the host. Its endpoint
+# handlers and composition-root helpers are public by design.
 dotnet_diagnostic.CA1515.severity = none
 
 # The repository targets one deployment and one language; culture-aware string APIs
@@ -44,8 +45,8 @@ dotnet_diagnostic.CA1304.severity = none
 dotnet_diagnostic.CA1305.severity = none
 dotnet_diagnostic.CA1311.severity = none
 
-[*.cs]
-# Analyzer rules that only make sense for a published library API.
+# Nothing here is a published library, and these two rules exist to protect one:
+# CA1716 would rename Error, and CA1034 would forbid a nested type.
 dotnet_diagnostic.CA1716.severity = none
 dotnet_diagnostic.CA1034.severity = none
 
@@ -57,9 +58,7 @@ dotnet_analyzer_diagnostic.severity = none
 dotnet_diagnostic.IDE0161.severity = none
 
 [tests/**/*.cs]
-# Test method names read as sentences, and xUnit's own vocabulary decides the
-# names of fixtures and collections.
+# Test method names read as sentences (CA1707), and xUnit's own vocabulary names
+# the collection type (CA1711).
 dotnet_diagnostic.CA1707.severity = none
 dotnet_diagnostic.CA1711.severity = none
-dotnet_diagnostic.MA0004.severity = none
-dotnet_diagnostic.S101.severity = none

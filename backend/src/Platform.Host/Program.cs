@@ -36,6 +36,13 @@ builder.Services.AddProjectsInfrastructure(connectionString);
 builder.Services.AddIntegrationsModule();
 builder.Services.AddAgentDelivery();
 
+// No SMTP and no mail container: in Development the Invitation link goes to the
+// log. No sender is registered elsewhere, so nothing can leak accept links.
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDevelopmentInvitationSender();
+}
+
 // Browser authentication. There is no call to MapIdentityApi and no registration
 // endpoint: an account exists only after an Invitation is accepted.
 builder.Services
@@ -114,6 +121,14 @@ if (Directory.Exists(app.Environment.WebRootPath))
 {
     app.UseDefaultFiles();
     app.UseStaticFiles();
+
+    // An unknown path under /api or /mcp is a missing endpoint, not a page. Without
+    // these, the SPA fallback would answer a mistyped API call with 200 and HTML.
+    // Both are less specific than the real routes, so they only catch what is left.
+    app.Map("/api/{**path}", () => Results.NotFound()).ExcludeFromDescription();
+    app.Map($"{AgentDeliveryModule.RoutePattern}/{{**path}}", () => Results.NotFound())
+        .ExcludeFromDescription();
+
     app.MapFallbackToFile("index.html");
 }
 

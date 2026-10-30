@@ -14,6 +14,9 @@ namespace Platform.Accounts.Domain;
 /// </remarks>
 public readonly record struct SecretHash
 {
+    /// <summary>A SHA-256 digest in lowercase hexadecimal is always 64 characters.</summary>
+    public const int Length = 64;
+
     private SecretHash(string value) => Value = value;
 
     /// <summary>The lowercase hexadecimal SHA-256 digest of the secret.</summary>

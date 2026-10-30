@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Hosting;
+using Npgsql;
 using Testcontainers.PostgreSql;
 
 namespace Platform.IntegrationTests;
@@ -35,6 +36,44 @@ public sealed class PlatformApplication : WebApplicationFactory<Program>, IAsync
     public string ConnectionString => _database.GetConnectionString();
 
     public async ValueTask InitializeAsync() => await _database.StartAsync(TestContext.Current.CancellationToken);
+
+    /// <summary>
+    /// Empties every table of both modules, leaving the applied migrations alone.
+    /// </summary>
+    /// <remarks>
+    /// The container and the composed host are shared across the whole suite, so a
+    /// test that writes data calls this first and starts from an empty database.
+    /// The behavioural tests named in issue #3 — Agent Token scoping, the
+    /// Offboarding cascade, and Invitation expiry — each seed their own Employees,
+    /// Projects and Memberships, and need this to avoid reading each other's rows.
+    /// </remarks>
+    public async Task ResetAsync(CancellationToken cancellationToken)
+    {
+        await using var connection = new NpgsqlConnection(ConnectionString);
+        await connection.OpenAsync(cancellationToken);
+
+        await using var command = connection.CreateCommand();
+        command.CommandText =
+            """
+            DO $$
+            DECLARE statement text;
+            BEGIN
+                SELECT 'TRUNCATE TABLE '
+                       || string_agg(format('%I.%I', schemaname, tablename), ', ')
+                       || ' RESTART IDENTITY CASCADE'
+                INTO statement
+                FROM pg_tables
+                WHERE schemaname IN ('accounts', 'projects')
+                  AND tablename <> '__migrations_history';
+
+                IF statement IS NOT NULL THEN
+                    EXECUTE statement;
+                END IF;
+            END $$;
+            """;
+
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
 
     public override async ValueTask DisposeAsync()
     {

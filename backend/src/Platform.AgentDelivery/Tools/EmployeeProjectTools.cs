@@ -23,7 +23,7 @@ public sealed class EmployeeProjectTools(IEmployeeProjectReader reader, ICurrent
     [Description("Lists the Projects the signed-in Employee is currently a member of.")]
     public async Task<IReadOnlyList<AgentProjectView>> ListMyProjectsAsync(CancellationToken cancellationToken)
     {
-        var projects = await reader.ListProjectsAsync(currentEmployee.Require(), cancellationToken);
+        var projects = await reader.ListProjectsAsync(currentEmployee.RequireEmployeeId(), cancellationToken);
 
         return [.. projects.Select(project => new AgentProjectView(
             project.Id.ToString(),
@@ -38,7 +38,7 @@ public sealed class EmployeeProjectTools(IEmployeeProjectReader reader, ICurrent
         CancellationToken cancellationToken)
     {
         var parsed = ParseProjectId(projectId);
-        var records = await reader.ListRepositoryRecordsAsync(currentEmployee.Require(), parsed, cancellationToken);
+        var records = await reader.ListRepositoryRecordsAsync(currentEmployee.RequireEmployeeId(), parsed, cancellationToken);
 
         if (records.IsFailure)
         {
@@ -57,7 +57,7 @@ public sealed class EmployeeProjectTools(IEmployeeProjectReader reader, ICurrent
         CancellationToken cancellationToken)
     {
         var parsed = ParseProjectId(projectId);
-        var instruction = await reader.GetInstructionAsync(currentEmployee.Require(), parsed, cancellationToken);
+        var instruction = await reader.GetInstructionAsync(currentEmployee.RequireEmployeeId(), parsed, cancellationToken);
 
         if (instruction.IsFailure)
         {

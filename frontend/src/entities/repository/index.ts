@@ -1,1 +1,1 @@
-export type { RepositoryRecord, RepositoryRecordId } from './model/types'
+export type { RepositoryRecordId } from './model/types'

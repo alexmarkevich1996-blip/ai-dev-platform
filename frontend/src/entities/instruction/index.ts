@@ -1,1 +1,1 @@
-export type { Instruction } from './model/types'
+export type { InstructionProjectId } from './model/types'
