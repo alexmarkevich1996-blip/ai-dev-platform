@@ -1,19 +1,21 @@
 # AGENTS.md
 
-## Product context
+## Language
 
-Read `docs/customer-requirements.md` before scoping new work: it holds the problem, the platform's goal, and the current scope boundary.
+Write documentation in English: Markdown, code comments, commit messages, pull request descriptions, and issue text.
 
-## Agent skills
+## Vocabulary
 
-### Issue tracker
+`DOMAIN.md` is the glossary. Name domain concepts with its terms, in code and in prose. Each headword pairs an English term with the Russian one the team speaks; keep both. A concept missing from the glossary is a signal: either you are inventing language the project does not use, or you found a real gap.
 
-Issues live in this repo's GitHub Issues, managed via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+## Scope
 
-### Triage labels
+`docs/first-version.md` sets the boundary: the two scenarios the first version must close, and what we defer. Read it before scoping or building. When a request lands on the deferred list, say so rather than building it.
 
-Canonical labels (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`) used as-is. See `docs/agents/triage-labels.md`.
+`docs/customer-requirements.md` is the customer's source text, for when the reason behind a requirement matters.
 
-### Domain docs
+`docs/adr/` records hard-to-reverse decisions. Read the ones touching your area; flag it when your work contradicts one.
 
-Single-context: `DOMAIN.md` and `docs/adr/` at the repo root, created lazily as terms/decisions resolve. See `docs/agents/domain.md`.
+## Issues
+
+Issues live in this repo's GitHub Issues, driven by `gh`. Read `docs/agents/issue-tracker.md` before creating, linking, labelling, or closing one: it carries the exact commands, including sub-issues and blocking edges. Triage labels live in `docs/agents/triage-labels.md` and are used as-is.
