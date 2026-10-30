@@ -18,7 +18,7 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("accounts")
-                .HasAnnotation("ProductVersion", "10.0.12")
+                .HasAnnotation("ProductVersion", "10.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -46,13 +46,13 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasColumnName("normalized_name");
 
                     b.HasKey("Id")
-                        .HasName("pk_asp_net_roles");
+                        .HasName("pk_roles");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", "accounts");
+                    b.ToTable("roles", "accounts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -77,12 +77,12 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasColumnName("role_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_asp_net_role_claims");
+                        .HasName("pk_role_claims");
 
                     b.HasIndex("RoleId")
-                        .HasDatabaseName("ix_asp_net_role_claims_role_id");
+                        .HasDatabaseName("ix_role_claims_role_id");
 
-                    b.ToTable("AspNetRoleClaims", "accounts");
+                    b.ToTable("role_claims", "accounts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -107,12 +107,12 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_asp_net_user_claims");
+                        .HasName("pk_employee_claims");
 
                     b.HasIndex("UserId")
-                        .HasDatabaseName("ix_asp_net_user_claims_user_id");
+                        .HasDatabaseName("ix_employee_claims_user_id");
 
-                    b.ToTable("AspNetUserClaims", "accounts");
+                    b.ToTable("employee_claims", "accounts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
@@ -134,12 +134,12 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasColumnName("user_id");
 
                     b.HasKey("LoginProvider", "ProviderKey")
-                        .HasName("pk_asp_net_user_logins");
+                        .HasName("pk_employee_logins");
 
                     b.HasIndex("UserId")
-                        .HasDatabaseName("ix_asp_net_user_logins_user_id");
+                        .HasDatabaseName("ix_employee_logins_user_id");
 
-                    b.ToTable("AspNetUserLogins", "accounts");
+                    b.ToTable("employee_logins", "accounts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
@@ -153,12 +153,12 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasColumnName("role_id");
 
                     b.HasKey("UserId", "RoleId")
-                        .HasName("pk_asp_net_user_roles");
+                        .HasName("pk_employee_roles");
 
                     b.HasIndex("RoleId")
-                        .HasDatabaseName("ix_asp_net_user_roles_role_id");
+                        .HasDatabaseName("ix_employee_roles_role_id");
 
-                    b.ToTable("AspNetUserRoles", "accounts");
+                    b.ToTable("employee_roles", "accounts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -180,9 +180,9 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasColumnName("value");
 
                     b.HasKey("UserId", "LoginProvider", "Name")
-                        .HasName("pk_asp_net_user_tokens");
+                        .HasName("pk_employee_tokens");
 
-                    b.ToTable("AspNetUserTokens", "accounts");
+                    b.ToTable("employee_tokens", "accounts");
                 });
 
             modelBuilder.Entity("Platform.Accounts.Domain.AgentToken", b =>
@@ -364,7 +364,7 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_asp_net_role_claims_asp_net_roles_role_id");
+                        .HasConstraintName("fk_role_claims_roles_role_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -374,7 +374,7 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_asp_net_user_claims_asp_net_users_user_id");
+                        .HasConstraintName("fk_employee_claims_employees_user_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
@@ -384,7 +384,7 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_asp_net_user_logins_asp_net_users_user_id");
+                        .HasConstraintName("fk_employee_logins_employees_user_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
@@ -394,14 +394,14 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_asp_net_user_roles_asp_net_roles_role_id");
+                        .HasConstraintName("fk_employee_roles_roles_role_id");
 
                     b.HasOne("Platform.Accounts.Domain.Employee", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_asp_net_user_roles_asp_net_users_user_id");
+                        .HasConstraintName("fk_employee_roles_employees_user_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -411,7 +411,7 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id");
+                        .HasConstraintName("fk_employee_tokens_employees_user_id");
                 });
 #pragma warning restore 612, 618
         }

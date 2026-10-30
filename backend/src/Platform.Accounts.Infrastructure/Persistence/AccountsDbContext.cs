@@ -33,5 +33,15 @@ public sealed class AccountsDbContext(DbContextOptions<AccountsDbContext> option
 
         builder.HasDefaultSchema(Schema);
         builder.ApplyConfigurationsFromAssembly(typeof(AccountsDbContext).Assembly);
+
+        // Identity names its own tables, which the snake-case convention leaves
+        // alone. Renaming them here keeps one naming style across the schema and
+        // states the vocabulary: these are Employees, not users.
+        builder.Entity<IdentityRole<Guid>>().ToTable("roles");
+        builder.Entity<IdentityRoleClaim<Guid>>().ToTable("role_claims");
+        builder.Entity<IdentityUserClaim<Guid>>().ToTable("employee_claims");
+        builder.Entity<IdentityUserLogin<Guid>>().ToTable("employee_logins");
+        builder.Entity<IdentityUserRole<Guid>>().ToTable("employee_roles");
+        builder.Entity<IdentityUserToken<Guid>>().ToTable("employee_tokens");
     }
 }

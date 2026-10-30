@@ -1,0 +1,54 @@
+name: ai-dev-platform
+
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready --username=$${POSTGRES_USER} --dbname=$${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
+      ConnectionStrings__Default: ${ConnectionStrings__Default}
+    ports:
+      - '8080:8080'
+    # The database must answer before the backend starts, so the first run does
+    # not fail on a race.
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      # /health/live says the process is running; /health/ready says it can do
+      # its work. Compose waits for the second one.
+      test: ['CMD-SHELL', 'curl --fail --silent http://localhost:8080/health/ready || exit 1']
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 60s
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      BACKEND_URL: http://backend:8080
+    ports:
+      - '5173:5173'
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  db-data:
