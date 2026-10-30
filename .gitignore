@@ -13,3 +13,14 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Build output
+bin/
+obj/
+
+# Node
+node_modules/
+dist/
+
+# The frontend build output, served by the backend in production
+backend/src/Platform.Host/wwwroot/

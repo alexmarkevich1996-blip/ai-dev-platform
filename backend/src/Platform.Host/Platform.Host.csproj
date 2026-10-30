@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <UserSecretsId>platform-host</UserSecretsId>
+
+    <!-- The OpenAPI document is written on every build and committed, so the
+         frontend can regenerate its types without a running backend.
+         See AGENTS.md, "Regenerate the frontend API types". -->
+    <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
+    <OpenApiGenerateDocumentsOnBuild>true</OpenApiGenerateDocumentsOnBuild>
+    <OpenApiDocumentsDirectory>$(MSBuildThisFileDirectory)..\..\openapi</OpenApiDocumentsDirectory>
+  </PropertyGroup>
+
+  <!-- The composition root is the only project allowed to see every module. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Platform.Accounts\Platform.Accounts.csproj" />
+    <ProjectReference Include="..\Platform.Accounts.Infrastructure\Platform.Accounts.Infrastructure.csproj" />
+    <ProjectReference Include="..\Platform.AgentDelivery\Platform.AgentDelivery.csproj" />
+    <ProjectReference Include="..\Platform.Integrations\Platform.Integrations.csproj" />
+    <ProjectReference Include="..\Platform.Projects\Platform.Projects.csproj" />
+    <ProjectReference Include="..\Platform.Projects.Infrastructure\Platform.Projects.Infrastructure.csproj" />
+    <ProjectReference Include="..\Platform.SharedKernel\Platform.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql" />
+    <PackageReference Include="Scrutor" />
+    <PackageReference Include="Serilog.AspNetCore" />
+    <PackageReference Include="Serilog.Sinks.Console" />
+  </ItemGroup>
+
+</Project>

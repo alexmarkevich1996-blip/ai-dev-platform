@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Platform.Accounts.Infrastructure/Platform.Accounts.Infrastructure.csproj" />
+    <Project Path="src/Platform.Accounts/Platform.Accounts.csproj" />
+    <Project Path="src/Platform.AgentDelivery/Platform.AgentDelivery.csproj" />
+    <Project Path="src/Platform.Host/Platform.Host.csproj" />
+    <Project Path="src/Platform.Integrations/Platform.Integrations.csproj" />
+    <Project Path="src/Platform.Projects.Infrastructure/Platform.Projects.Infrastructure.csproj" />
+    <Project Path="src/Platform.Projects/Platform.Projects.csproj" />
+    <Project Path="src/Platform.SharedKernel/Platform.SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Platform.IntegrationTests/Platform.IntegrationTests.csproj" />
+  </Folder>
+</Solution>
