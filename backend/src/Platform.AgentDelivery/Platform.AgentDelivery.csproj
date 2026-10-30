@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <!-- AgentDelivery holds no storage. It asks Accounts and Projects, so it
+       references the modules but never their Infrastructure projects. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Platform.Accounts\Platform.Accounts.csproj" />
+    <ProjectReference Include="..\Platform.Projects\Platform.Projects.csproj" />
+    <ProjectReference Include="..\Platform.SharedKernel\Platform.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ModelContextProtocol.AspNetCore" />
+  </ItemGroup>
+
+</Project>

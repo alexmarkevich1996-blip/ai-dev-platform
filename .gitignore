@@ -13,3 +13,11 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Build output
+bin/
+obj/
+
+# Node
+node_modules/
+dist/

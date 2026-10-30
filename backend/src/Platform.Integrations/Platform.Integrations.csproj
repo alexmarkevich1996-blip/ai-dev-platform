@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- An empty shell in the first version: no storage and no Infrastructure
+       project. ADR-0001 keeps GitHub permission management out of scope. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Platform.SharedKernel\Platform.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+</Project>
