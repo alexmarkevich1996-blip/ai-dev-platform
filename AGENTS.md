@@ -14,6 +14,8 @@ Write documentation in English: Markdown, code comments, commit messages, pull r
 
 `docs/customer-requirements.md` is the customer's source text, for when the reason behind a requirement matters.
 
+`docs/technical-foundation.md` sets the stack and structure: backend modules, data, auth, frontend, local environment, and the test seam. Read it before writing code.
+
 `docs/adr/` records hard-to-reverse decisions. Read the ones touching your area; flag it when your work contradicts one.
 
 ## Issues
