@@ -1,41 +1,44 @@
-# Требования заказчика
+# Customer requirements
 
-## Проблема
+> Translated from the customer's Russian original. The Russian text is in the git history,
+> at commit c44e9c3.
 
-Мы IT-компания с несколькими командами и сервисами. Репозитории храним на GitHub. Разработчики уже работают с агентами, но каждый собирает инструкции и настраивает инструменты по-своему. Полезные приёмы остаются внутри отдельных команд.
+## The problem
 
-Новичок выясняет у коллег, какие репозитории ему нужны, ждёт доступов и готовит рабочее окружение. При уходе сотрудника мы можем забыть закрыть часть доступов. Нам трудно понять, какие данные получают агенты и сколько команды тратят на модели.
+We are an IT company with several teams and services. We keep our repositories on GitHub. Our developers already work with agents, but each one assembles their own instructions and configures their own tools. Useful practices stay inside individual teams.
 
-## Зачем нам платформа
+A new hire asks colleagues which repositories they need, waits for access, and prepares a working environment. When someone leaves, we may forget to close some of their access. We find it hard to see what data the agents receive and how much the teams spend on models.
 
-Мы хотим выстроить разработку по подходу AI-first. При таком подходе агенты участвуют в работе от постановки задачи до релиза. Люди определяют результат, принимают решения и проверяют работу.
+## Why we want a platform
 
-Нам нужна платформа, которая свяжет сотрудников, проекты, агентов и правила компании. Она поможет дать человеку и его агенту нужные сведения и доступы. Начнём с подключения разработчика к проекту. Позже хотим применять платформу на других этапах разработки и в работе других сотрудников.
+We want to organise development around an AI-first approach. Under that approach, agents take part in the work from task definition through to release. People define the outcome, make the decisions, and check the work.
 
-## С чего хотим начать
+We need a platform that connects employees, projects, agents, and company rules. It should help give a person and their agent the information and access they need. We will start by connecting a developer to a project. Later we want to apply the platform to other stages of development and to the work of other employees.
 
-Для первой версии нам нужны учётные записи сотрудников и вход по приглашению. Мы хотим создавать проекты, связывать их с репозиториями на GitHub и хранить инструкции для работы. Один проект может объединять репозитории нескольких сервисов.
+## Where we want to start
 
-Сотрудник должен получать доступ ко всему разрешённому проекту, включая все его репозитории через GitHub. Он подключает своего агента к платформе. Агент получает только доступные сотруднику проекты, репозитории и инструкции. По этим инструкциям агент готовит рабочее окружение и проверяет доступ к нужным репозиториям.
+For the first version we need employee accounts and invitation-based sign-in. We want to create projects, link them to repositories on GitHub, and store instructions for working. One project may group the repositories of several services.
 
-При уходе сотрудника мы должны закрыть ему доступ к платформе и репозиториям. Его агент больше не должен получать данные компании. Права сотрудника должны одинаково ограничивать его собственный доступ и доступ его агента.
+An employee should get access to the whole project they are permitted, including all of its repositories through GitHub. They connect their own agent to the platform. The agent receives only the projects, repositories, and instructions available to that employee. Following those instructions, the agent prepares a working environment and checks access to the repositories it needs.
 
-Для подключения внешних сервисов нам нужен отдельный модуль интеграций. Первой интеграцией будет GitHub. Позже через этот модуль можно подключать другие сервисы, например трекер задач или хранилище документации.
+When an employee leaves, we must close their access to the platform and to the repositories. Their agent must stop receiving company data. An employee's rights must constrain their own access and their agent's access equally.
 
-На старте нам достаточно поддержки одного агента разработчика, которого выберет команда. Конкретный способ подключения, интерфейс и технические решения мы оставляем команде. Нам важно сохранить понятные границы частей приложения, чтобы развивать платформу дальше. Подробности начальных сценариев будем уточнять по ходу работы.
+To connect external services we need a separate integrations module. The first integration will be GitHub. Later we can connect other services through that module, for example an issue tracker or a documentation store.
 
-## Куда можем развивать платформу
+To begin with, supporting one developer agent of the team's choosing is enough. We leave the specific connection method, the interface, and the technical decisions to the team. It matters to us that the boundaries between parts of the application stay clear, so we can keep developing the platform. We will settle the details of the initial scenarios as the work goes on.
 
-Мы рассматриваем несколько направлений, но пока не задаём их порядок и полный состав.
+## Where we might take the platform
 
-**Команды и доступы.** Хотим объединять сотрудников в команды, учитывать разные роли и управлять доступами к проектам и инструментам.
+We are considering several directions, but we are not yet fixing their order or their full set.
 
-**Общие инструменты.** Нас интересуют общие скиллы, то есть повторно используемые инструкции для агентов, инструменты компании и контроль расходов на модели.
+**Teams and access.** We want to group employees into teams, account for different roles, and manage access to projects and tools.
 
-**Агент компании.** Такой агент мог бы проводить онбординг, то есть помогать новичку освоиться в проектах и начать работу. Он мог бы отвечать по документации со ссылками на источники и сообщать, когда сведений нет. Он также мог бы помогать находить подходящие задачи. Доступные ответы и задачи должны учитывать права сотрудника.
+**Shared tooling.** We are interested in shared skills, meaning reusable instructions for agents, in company tools, and in controlling model spend.
 
-**Задачи и выполнение в облаке.** Можно подключить внешний трекер, например Jira, или сделать свой. Хотим попробовать назначать задачи агентам, запускать их в облаке и поручать работу нескольким агентам параллельно. Для запуска кода рассматриваем песочницу, изолированное окружение с ограниченными доступами.
+**A company agent.** Such an agent could run onboarding, meaning it would help a new hire find their way around projects and start working. It could answer from the documentation with links to sources, and say when it has no information. It could also help find suitable tasks. The answers and tasks it offers must respect the employee's rights.
 
-**Качество, релизы и эксплуатация.** Платформа могла бы помогать проверять изменения, оценивать работу агентов, готовить релизы и сопровождать сервисы. Обратная связь сотрудников о результатах агентов могла бы помогать улучшать их работу. Нам также интересны наблюдение за ошибками и восстановление после сбоев.
+**Tasks and cloud execution.** We could connect an external tracker such as Jira, or build our own. We want to try assigning tasks to agents, running them in the cloud, and handing work to several agents in parallel. For running code we are considering a sandbox, an isolated environment with restricted access.
 
-Эти направления открыты для обсуждения. Конкретные возможности и приоритеты выберем по опыту работы с первой версией.
+**Quality, releases, and operations.** The platform could help review changes, evaluate how agents perform, prepare releases, and support services. Employee feedback on agent results could help improve how the agents work. We are also interested in error monitoring and recovery from failures.
+
+These directions are open for discussion. We will pick the specific capabilities and priorities from our experience with the first version.
