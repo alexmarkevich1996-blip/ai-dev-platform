@@ -1,0 +1,8 @@
+/* Mantine's defaults are accepted as they are: visual design is out of scope
+   for the technical foundation. Only the page frame is set here. */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
