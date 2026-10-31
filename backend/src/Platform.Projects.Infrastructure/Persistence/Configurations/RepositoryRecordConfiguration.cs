@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Platform.Projects.Domain;
+using Platform.SharedKernel.Identifiers;
 
 namespace Platform.Projects.Infrastructure.Persistence.Configurations;
 

@@ -4,6 +4,7 @@ using ModelContextProtocol.Server;
 using Platform.AgentDelivery.Authentication;
 using Platform.Projects.Abstractions;
 using Platform.Projects.Domain;
+using Platform.SharedKernel.Identifiers;
 
 namespace Platform.AgentDelivery.Tools;
 

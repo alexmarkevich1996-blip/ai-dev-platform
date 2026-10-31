@@ -1,6 +1,14 @@
-namespace Platform.Projects.Domain;
+namespace Platform.SharedKernel.Identifiers;
 
-/// <summary>Identifies a Project.</summary>
+/// <summary>
+/// Identifies a Project across module boundaries.
+/// </summary>
+/// <remarks>
+/// This type lives in the shared kernel, not in Projects, because an Invitation
+/// carries the first set of Project Memberships to grant and Accounts must not
+/// reference Projects. Keeping the identifier here is what lets the two modules
+/// stay apart while still speaking about the same Project.
+/// </remarks>
 public readonly record struct ProjectId(Guid Value)
 {
     public static ProjectId New() => new(Guid.CreateVersion7());

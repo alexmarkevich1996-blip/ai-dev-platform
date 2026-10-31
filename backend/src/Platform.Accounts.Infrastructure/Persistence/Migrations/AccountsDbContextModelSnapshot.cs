@@ -341,6 +341,11 @@ namespace Platform.Accounts.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("issued_at");
 
+                    b.Property<Guid[]>("ProjectIds")
+                        .IsRequired()
+                        .HasColumnType("uuid[]")
+                        .HasColumnName("project_ids");
+
                     b.Property<string>("TokenHash")
                         .IsRequired()
                         .HasMaxLength(64)
