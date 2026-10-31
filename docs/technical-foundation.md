@@ -86,6 +86,8 @@ Two health endpoints: `/health/live` reports the process is running; `/health/re
 
 Configuration is environment variables. `.env` is ignored by Git; `.env.example` is committed and lists every variable: database user, password, name, the connection string, and the ASP.NET Core environment.
 
+For a recorded clean startup, connectivity checks, and their limits, see [the 2026-10-31 verification](./local-startup-verification-2026-10-31.md).
+
 ## Testing
 
 One seam for the whole codebase: the composed application over HTTP, backed by a real PostgreSQL via Testcontainers (`WebApplicationFactory` around `Platform.Host`). No module is tested in isolation and no module is mocked — the governing rule only holds in composition, so a per-module seam could pass in isolation and fail in composition.
