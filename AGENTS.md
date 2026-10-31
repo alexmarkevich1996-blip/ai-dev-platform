@@ -20,7 +20,7 @@ Write documentation in English: Markdown, code comments, commit messages, pull r
 
 ## Commands
 
-`docs/technical-foundation.md` describes the structure. These are the four commands it does not carry, each with the part that is not visible from a config file.
+`docs/technical-foundation.md` describes the structure. These are the commands it does not carry, each with the part that is not visible from a config file.
 
 ### Run the platform locally
 
@@ -33,6 +33,21 @@ docker compose up --build
 
 The frontend answers on port 5173 and proxies `/api` and `/mcp` to the backend on 8080.
 
+### Run the backend outside Compose
+
+`appsettings.json` ships a connection string with no password, by design: Compose
+supplies one through `ConnectionStrings__Default`. Running `Platform.Host` any other
+way — `dotnet run`, or a debugger — needs the password set another way first.
+
+```bash
+docker compose up db -d
+cd backend/src/Platform.Host
+dotnet user-secrets set "ConnectionStrings:Default" \
+  "Host=localhost;Port=5432;Database=platform;Username=platform;Password=<value from .env>"
+```
+
+Migrations still apply automatically, because `ASPNETCORE_ENVIRONMENT` defaults to
+`Development` in `launchSettings.json`.
 ### Run the tests
 
 ```bash
