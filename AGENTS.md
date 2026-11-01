@@ -24,6 +24,9 @@ Write documentation in English: Markdown, code comments, commit messages, pull r
 Compose file. Application code lives only on `main` and on feature branches cut from `main`. A
 worktree checked out on `sardine` cannot run the platform; switch to `main` for that.
 
+`main` is GitHub-protected: no direct push, no force push, no branch deletion, no admin bypass.
+Land every change through a pull request.
+
 ## Commands
 
 `docs/technical-foundation.md` describes the structure. These are the commands it does not carry, each with the part that is not visible from a config file.
