@@ -18,6 +18,12 @@ Write documentation in English: Markdown, code comments, commit messages, pull r
 
 `docs/adr/` records hard-to-reverse decisions. Read the ones touching your area; flag it when your work contradicts one.
 
+## Branches
+
+`sardine` carries docs only (this file, `DOMAIN.md`, `docs/`) — no `backend/`, `frontend/`, or
+Compose file. Application code lives only on `main` and on feature branches cut from `main`. A
+worktree checked out on `sardine` cannot run the platform; switch to `main` for that.
+
 ## Commands
 
 `docs/technical-foundation.md` describes the structure. These are the commands it does not carry, each with the part that is not visible from a config file.
